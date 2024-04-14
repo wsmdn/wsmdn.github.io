@@ -239,3 +239,36 @@ body {
     left: 0;
     top: 0;
 }
+      .container{
+            width: 600px;
+      }
+
+      .mes-board{
+            margin: 25px 0;
+            padding: 10px;
+            background-color: gray;
+
+      }
+      .mes-board li{
+            padding: 0.7em;
+            list-style: none;
+      }
+      .mes-board li + li {
+             border-top: 1px dashed #ffffff;
+      }
+      .mes-board h4{
+            display: inline;
+            margin-right: 10px;
+            font-weight: 400px;
+            color: #000000;
+      }
+      .mes-board small{
+            color: #999999;
+            float: right;
+      }
+      .mes-board div{
+            padding: 0.4em 0;
+            text-align: justify;
+            font-size: 12px;
+            margin-top: 10px;
+      }

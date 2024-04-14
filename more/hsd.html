@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+   <html>
+       <head>
+           <meta charset="UTF-8">
+           <title>回声洞</title>
+           <style type="text/css">
+           *{margin:0; padding:0;}
+           body,input{font-size:14px; line-height:24px; color:#333; font-family:Microsoft yahei, Song, Arial, Helvetica, Tahoma, Geneva;}
+           h1{margin-bottom:15px; height:100px; line-height:100px; text-align:center; font-size:24px; color:#fff; background:black;}
+          #content #post,#comment p{zoom:1;}
+          #content #post:after,#comment p:after{display:block; height:0; clear:both; visibility:hidden; overflow:hidden; content:'.';}
+          .transition{-webkit-transition:all 0.5s linear; -moz-transition:all 0.5s linear; -o-transition:all 0.5s linear; -ms-transition:all 0.5s linear; transition:all 0.5s linear;}
+          #content{margin:0 auto; width:960px; overflow:hidden;}
+          #content #post{margin-bottom:15px; padding-bottom:15px; border-bottom:1px #d4d4d4 dashed;
+                   height: 556px;
+               }
+          #content #post textarea{display:block; margin-bottom:10px; padding:5px; width:948px; height:390px; border:1px #d1d1d1 solid; border-radius:5px; resize:none; outline:none;}
+          #content #post textarea:hover{border:1px #9bdf70 solid; background:#f0fbeb;}
+          #content #post #postBt,#content #post #clearBt{margin-left:5px; padding:3px; float:right;}
+          #comment{overflow:hidden;}
+          #comment p{margin-bottom:10px; padding:10px; border-radius:5px;}
+         #comment p:nth-child(odd){border:1px solid #e3e197; background:#ffd;}
+          #comment p:nth-child(even){border:1px solid #adcd3c; background:#f2fddb;}
+          /*#comment p span{display:inline; float:left;}*/
+          #comment p .right{text-align:right;}
+          #comment p .msg{width:738px;}
+          #comment p .datetime{width:200px; color:#999; text-align:right;}
+
+
+
+          </style>
+         <script type="text/javascript">
+             var named;
+             function delete1(id)
+             {
+                 localStorage.removeItem(id);
+                 this.Storage.writeData();
+             }
+             function prom() {
+
+                 var name = prompt("请输入您的名字", "");//将输入的内容赋给变量 name ，
+                 named = name;
+                 //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+
+                 if (named)//如果返回的有内容
+
+                 {
+
+                     alert("欢迎您：" + name)
+                     document.getElementById("shangtian").style.display = "none";
+                     document.getElementById("ritian").value = named;
+
+                 }
+                 else {
+                     document.getElementById("ritian").value = "匿名发言者";
+                 }
+
+             }
+          var Storage =
+          {
+              saveData:function()//保存数据
+              {
+    
+                      var data = document.querySelector("#post textarea");
+                  if(data.value != "")
+                  {
+                      var time = new Date().getTime() + Math.random() * 5;//getTime是Date对象中的方法，作用是返回 1970年01月01日至今的毫秒数
+                      if (named) {
+                          localStorage.setItem(time, data.value + "|" + named + "|" + this.getDateTime());//将毫秒数存入Key值中，可以降低Key值重复率
+                      }
+                      else
+                      {
+                          localStorage.setItem(time, data.value + "|" + "匿名发言者" + "|" + this.getDateTime());//将毫秒数存入Key值中，可以降低Key值重复率
+                      }
+
+                      data.value = "";
+                      this.writeData();
+                  }
+                  else
+                  {
+                      alert("请填写您的留言！");
+                 }
+              },
+              writeData:function()//输出数据
+              {
+                 var dataHtml = "", data = "";
+                  for(var i = localStorage.length-1; i >= 0; i--)//效率更高的循环方法
+                  {
+                      data = localStorage.getItem(localStorage.key(i)).split("|");
+ 
+                          //dataHtml += "<p><span class=\"msg\">" + data[0] + "</span><span class=\"datetime\">" + data[1] + "</span><span>" + data[2]+"</span></p>";
+                      dataHtml += "<span style=>" + data[1] + "<span style=\"float:right\">" + data[2] + "</span><p><span class=\"msg\">" + data[0] + "<input style=\"float:right;border:none;border-radius:5px;\" id=\"clearBt\" type=\"button\" onclick=\"delete1(" + localStorage.key(i) + ");\" value=\"删除\"/>" + "</span></p>";
+                  }
+                  document.getElementById("comment").innerHTML = dataHtml;
+              },
+              clearData:function()//清空数据
+              {
+                  if(localStorage.length > 0)
+                  {
+                      if(window.confirm("清空后不可恢复，是否确认清空？"))
+                      {
+                          localStorage.clear();
+                          this.writeData();
+                      }
+                  }
+                  else
+                 {
+                     alert("没有需要清空的数据！");
+                  }
+              },
+              getDateTime:function()//获取日期时间，例如 2012-03-08 12:58:58
+              {
+                  var isZero = function(num)//私有方法，自动补零
+                  {
+                      if(num < 10)
+                     {
+                          num = "0" + num;
+                      }
+                      return num;
+                  }
+                  
+                  var d = new Date();
+                  return d.getFullYear() + "-" + isZero(d.getMonth() + 1) + "-" + isZero(d.getDate()) + " " + isZero(d.getHours()) + ":" + isZero(d.getMinutes()) + ":" + isZero(d.getSeconds());
+              }            
+          }
+          
+          window.onload = function()
+          {
+              Storage.writeData();//当打开页面的时候，先将localStorage中的数据输出一边，如果没有数据，则输出空
+              document.getElementById("postBt").onclick = function(){Storage.saveData();}//发表评论按钮添加点击事件，作用是将localStorage中的数据输出
+              document.getElementById("clearBt").onclick = function(){Storage.clearData();}//清空所有已保存的数据
+          }
+
+
+
+
+
+          </script>
+      </head>
+      
+      <body>
+          <h1>回声洞</h1>
+
+          <div id="content">
+              <div id="post">
+                  <div style="background:#3EADC5 ;height:30px;">
+                      昵称：<input type="submit" id="shangtian" name="Submit3" style="border:none; background-color:#3EADC5; color:white;" value="默认用户点击改变" onclick="prom()" />
+                      <input type="text" id="ritian" style="border:none; background-color:#3EADC5; color:white;"   onclick="prom()"/>
+                      <!--disabled="disabled"-->
+                  </div>
+                  <div>
+                  <textarea class="transition"></textarea>
+                      </div>
+                  <input id="postBt" type="button" style="border:none; background-color:#3EADC5; color:white;border-radius:5px; width:80px; height:30px;" value="发表留言"/>
+                 <input id="clearBt" type="button" style="border:none; background-color:#3EADC5; color:white;border-radius:5px; width:80px; height:30px;" value="清空"/>
+             </div>
+             <div id="comment"></div>
+              </div>
+            </div>
+            <script>
+                function clickEffect() {
+                  let balls = [];
+                  let longPressed = false;
+                  let longPress;
+                  let multiplier = 0;
+                  let width, height;
+                  let origin;
+                  let normal;
+                  let ctx;
+                  const colours = ["#F73859", "#14FFEC", "#00E0FF", "#FF99FE", "#FAF15D"];
+                  const canvas = document.createElement("canvas");
+                  document.body.appendChild(canvas);
+                  canvas.setAttribute("style", "width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;");
+                  const pointer = document.createElement("span");
+                  pointer.classList.add("pointer");
+                  document.body.appendChild(pointer);
+                 
+                  if (canvas.getContext && window.addEventListener) {
+                    ctx = canvas.getContext("2d");
+                    updateSize();
+                    window.addEventListener('resize', updateSize, false);
+                    loop();
+                    window.addEventListener("mousedown", function(e) {
+                      pushBalls(randBetween(10, 20), e.clientX, e.clientY);
+                      document.body.classList.add("is-pressed");
+                      longPress = setTimeout(function(){
+                        document.body.classList.add("is-longpress");
+                        longPressed = true;
+                      }, 500);
+                    }, false);
+                    window.addEventListener("mouseup", function(e) {
+                      clearInterval(longPress);
+                      if (longPressed == true) {
+                        document.body.classList.remove("is-longpress");
+                        pushBalls(randBetween(50 + Math.ceil(multiplier), 100 + Math.ceil(multiplier)), e.clientX, e.clientY);
+                        longPressed = false;
+                      }
+                      document.body.classList.remove("is-pressed");
+                    }, false);
+                    window.addEventListener("mousemove", function(e) {
+                      let x = e.clientX;
+                      let y = e.clientY;
+                      pointer.style.top = y + "px";
+                      pointer.style.left = x + "px";
+                    }, false);
+                  } else {
+                    console.log("canvas or addEventListener is unsupported!");
+                  }
+                 
+                 
+                  function updateSize() {
+                    canvas.width = window.innerWidth * 2;
+                    canvas.height = window.innerHeight * 2;
+                    canvas.style.width = window.innerWidth + 'px';
+                    canvas.style.height = window.innerHeight + 'px';
+                    ctx.scale(2, 2);
+                    width = (canvas.width = window.innerWidth);
+                    height = (canvas.height = window.innerHeight);
+                    origin = {
+                      x: width / 2,
+                      y: height / 2
+                    };
+                    normal = {
+                      x: width / 2,
+                      y: height / 2
+                    };
+                  }
+                  class Ball {
+                    constructor(x = origin.x, y = origin.y) {
+                      this.x = x;
+                      this.y = y;
+                      this.angle = Math.PI * 2 * Math.random();
+                      if (longPressed == true) {
+                        this.multiplier = randBetween(14 + multiplier, 15 + multiplier);
+                      } else {
+                        this.multiplier = randBetween(6, 12);
+                      }
+                      this.vx = (this.multiplier + Math.random() * 0.5) * Math.cos(this.angle);
+                      this.vy = (this.multiplier + Math.random() * 0.5) * Math.sin(this.angle);
+                      this.r = randBetween(8, 12) + 3 * Math.random();
+                      this.color = colours[Math.floor(Math.random() * colours.length)];
+                    }
+                    update() {
+                      this.x += this.vx - normal.x;
+                      this.y += this.vy - normal.y;
+                      normal.x = -2 / window.innerWidth * Math.sin(this.angle);
+                      normal.y = -2 / window.innerHeight * Math.cos(this.angle);
+                      this.r -= 0.3;
+                      this.vx *= 0.9;
+                      this.vy *= 0.9;
+                    }
+                  }
+                 
+                  function pushBalls(count = 1, x = origin.x, y = origin.y) {
+                    for (let i = 0; i < count; i++) {
+                      balls.push(new Ball(x, y));
+                    }
+                  }
+                 
+                  function randBetween(min, max) {
+                    return Math.floor(Math.random() * max) + min;
+                  }
+                 
+                  function loop() {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0)";
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let i = 0; i < balls.length; i++) {
+                      let b = balls[i];
+                      if (b.r < 0) continue;
+                      ctx.fillStyle = b.color;
+                      ctx.beginPath();
+                      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+                      ctx.fill();
+                      b.update();
+                    }
+                    if (longPressed == true) {
+                      multiplier += 0.2;
+                    } else if (!longPressed && multiplier >= 0) {
+                      multiplier -= 0.4;
+                    }
+                    removeBall();
+                    requestAnimationFrame(loop);
+                  }
+                 
+                  function removeBall() {
+                    for (let i = 0; i < balls.length; i++) {
+                      let b = balls[i];
+                      if (b.x + b.r < 0 || b.x - b.r > width || b.y + b.r < 0 || b.y - b.r > height || b.r < 0) {
+                        balls.splice(i, 1);
+                      }
+                    }
+                  }
+                }
+                clickEffect();//调用特效函数
+                </script>
+                
+        
+          </body>
+ </html>
