@@ -87,7 +87,7 @@ body {
 .custom-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #bee3ac;
+    background-color: #accfe3;
     color: #fff;
     font-size: 16px;
     border: none;
@@ -272,3 +272,47 @@ body {
             font-size: 12px;
             margin-top: 10px;
       }
+      body {  
+        font-family: Arial, sans-serif;  
+        margin: 0;  
+        padding: 20px;  
+        background-color: #f4f4f4; /* 背景色可以根据图片调整 */  
+    }  
+      
+    .game-container {  
+        text-align: left;  
+        background-color: #fff; /* 背景色可以根据图片调整 */  
+        padding: 20px;  
+        border-radius: 5px;  
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果可以根据图片调整 */  
+        margin-bottom: 20px; /* 与页面其他部分的间距 */  
+    }  
+      
+    .game-title {  
+        font-size: 24px;  
+        font-weight: bold;  
+        margin: 0 0 10px 0; /* 下方间距 */  
+    }  
+      
+    .game-info {  
+        font-size: 16px;  
+        margin: 0 0 10px 0; /* 下方间距 */  
+    }  
+      
+    .game-link-container {  
+        text-align: left; /* 如果需要左对齐链接 */  
+    }  
+      
+    .game-link {  
+        display: inline-block;  
+        padding: 10px 20px;  
+        background-color: #4ca0af; /* 背景色可以根据图片调整 */  
+        color: white;  
+        text-decoration: none;  
+        border-radius: 5px;  
+        transition: background-color 0.3s ease; /* 平滑过渡效果 */  
+    }  
+      
+    .game-link:hover {  
+        background-color: #45a049; /* 悬停时的背景色可以根据图片调整 */  
+    }
