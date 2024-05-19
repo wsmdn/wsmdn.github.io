@@ -316,3 +316,11 @@ body {
     .game-link:hover {  
         background-color: #45a049; /* 悬停时的背景色可以根据图片调整 */  
     }
+    .body-container {  
+        text-align: middle;  
+        background-color: #fff; /* 背景色可以根据图片调整 */  
+        padding: 20px;  
+        border-radius: 5px;  
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果可以根据图片调整 */  
+        margin-bottom: 0px; /* 与页面其他部分的间距 */  
+    }  
