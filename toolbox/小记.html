@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>小记</title>
+    <style>
+        /* CSS样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .noteItem {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+        .noteItem p {
+            margin: 0;
+        }
+        .noteItem button {
+            float: right;
+            background-color: #f44336;
+        }
+        .noteItem button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h1>小记</h1>
+    <p>输入笔记内容（长按选择内容可以分享）:</p>
+    <textarea id="noteInput"></textarea>
+    <br><br>
+    <button id="addNoteBtn">添加笔记</button>
+    <br><br>
+    <ul id="notesList"></ul>
+
+    <script>
+        // JavaScript代码
+        const noteInput = document.getElementById('noteInput');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const notesList = document.getElementById('notesList');
+
+        let notes = [];
+
+        // 加载笔记数据
+        function loadNotes() {
+            const notesStr = localStorage.getItem('notes');
+            if (notesStr) {
+                notes = JSON.parse(notesStr);
+                for (const note of notes) {
+                    addNoteToList(note);
+                }
+            }
+        }
+
+        // 保存笔记数据
+        function saveNotes() {
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        // 添加笔记到列表中
+        function addNoteToList(note) {
+            const noteItem = document.createElement('li');
+            noteItem.className = 'noteItem';
+            noteItem.innerHTML = `
+                <p>${note}</p>
+                <button>删除</button>
+            `;
+            noteItem.querySelector('button').addEventListener('click', function() {
+                notesList.removeChild(noteItem);
+                notes.splice(notes.indexOf(note), 1);
+                saveNotes();
+            });
+            notesList.appendChild(noteItem);
+        }
+
+        // 监听按钮点击事件
+        addNoteBtn.addEventListener('click', function() {
+            const note = noteInput.value.trim();
+            if (note) {
+                notes.push(note);
+                addNoteToList(note);
+                saveNotes();
+                noteInput.value = '';
+            }
+        });
+
+        // 初始化应用
+        loadNotes();
+    </script>
+</body>
+</html>
