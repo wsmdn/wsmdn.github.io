@@ -5,7 +5,7 @@ var config = {
     age: "稳定开服不知道几天",
     phone: "没花钱（自豪）",
     email: "a?",
-    address: "wsmdn.mon.pw:25565",
+    address: "mdn.cooltec.icu",
     qq: "不告诉你",
     log: "本服介绍",
     excpect_work: "wsmdn.github.io",
