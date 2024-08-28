@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>二维码生成工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .qr-code-generator {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .qr-code {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+        }
+
+        .hint-box {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>二维码生成工具</h1>
+
+    <div class="qr-code-generator">
+        <label>输入内容：</label>
+        <input type="text" id="content">
+
+        <button onclick="generateQRCode()">生成二维码</button>
+
+        <div id="qrCode" class="qr-code"></div>
+
+        <div id="hintBox" class="hint-box">Youreln提示：长按图片可以保存/分享</div>
+    </div>
+
+    <script>
+        function generateQRCode() {
+            var contentInput = document.getElementById("content");
+            var qrCodeDiv = document.getElementById("qrCode");
+            var hintBox = document.getElementById("hintBox");
+
+            var content = contentInput.value;
+
+            // 使用API生成二维码
+            var apiUrl = "https://api.vvhan.com/api/qr?text=" + encodeURIComponent(content);
+
+            // 创建img元素并设置src属性为API请求的URL
+            var qrCodeImg = document.createElement("img");
+            qrCodeImg.src = apiUrl;
+
+            // 清空qrCodeDiv并添加生成的二维码图片
+            qrCodeDiv.innerHTML = "";
+            qrCodeDiv.appendChild(qrCodeImg);
+
+            // 显示提示框
+            hintBox.style.display = "block";
+        }
+    </script>
+</body>
+
+</html>

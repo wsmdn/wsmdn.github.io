@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快递查询工具</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+    }
+
+    .error-message {
+      color: #ff0000;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .success-message {
+      color: #008000;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>快递查询工具</h1>
+
+    <form id="track-form">
+      <input type="text" id="tracking-number" placeholder="请输入快递号">
+      <input type="submit" value="查询">
+    </form>
+
+    <div id="result-container"></div>
+  </div>
+
+  <script>
+    var trackForm = document.getElementById('track-form');
+    var trackingNumberInput = document.getElementById('tracking-number');
+    var resultContainer = document.getElementById('result-container');
+
+    trackForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var trackingNumber = trackingNumberInput.value.trim();
+
+      if (trackingNumber === '') {
+        showError('请输入快递号');
+        return;
+      }
+
+      getResult(trackingNumber);
+    });
+
+    function getResult(trackingNumber) {
+      fetch('https://api.vvhan.com/api/kuaidi?hao=' + trackingNumber)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.success) {
+            showSuccess(data);
+          } else {
+            showError('查询失败，请确认快递号是否正确');
+          }
+        })
+        .catch(function(error) {
+          console.error(error);
+          showError('查询失败，请检查网络连接');
+        });
+    }
+
+    function showSuccess(data) {
+      resultContainer.innerHTML = '';
+
+      var table = document.createElement('table');
+
+      var headerRow = document.createElement('tr');
+      var headerTime = document.createElement('th');
+      var headerContext = document.createElement('th');
+
+      headerTime.textContent = '时间';
+      headerContext.textContent = '状态';
+
+      headerRow.appendChild(headerTime);
+      headerRow.appendChild(headerContext);
+
+      table.appendChild(headerRow);
+
+      data.info.forEach(function(item) {
+        var row = document.createElement('tr');
+        var timeCell = document.createElement('td');
+        var contextCell = document.createElement('td');
+
+        timeCell.textContent = item.time;
+        contextCell.textContent = item.context;
+
+        row.appendChild(timeCell);
+        row.appendChild(contextCell);
+
+        table.appendChild(row);
+      });
+
+      resultContainer.appendChild(table);
+    }
+
+    function showError(message) {
+      resultContainer.innerHTML = '';
+      
+      var errorMessage = document.createElement('div');
+      errorMessage.classList.add('error-message');
+      errorMessage.textContent = message;
+      
+      resultContainer.appendChild(errorMessage);
+    }
+  </script>
+</body>
+</html>

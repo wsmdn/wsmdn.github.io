@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../biaoqing.png" type="image/png"> 
+    <title>我的网页</title>
+</head>
+<style>
+.horizontal-cards {
+    display: flex; /* 使用Flexbox布局 */
+  flex-wrap: wrap; /* 允许卡片换行 */
+  gap: 20px; /* 设置卡片之间的间隔 */
+  padding: 10px; /* 容器内边距 */
+}
+
+/* 确保卡片宽度不超过最大值 */
+.ad-card {
+  width: 300px; /* 卡片最大宽度 */
+  flex: 0 1 auto; /* 允许卡片根据可用空间伸缩 */
+  /* margin: 15px; */ /* 删除或注释掉这行，因为gap已经提供了间距 */
+}
+
+/* 鼠标悬停时的样式 */
+.ad-card:hover {
+  transform: translateY(-10px); /* 鼠标悬停时向上移动 */
+}
+
+/* 卡片广告图片样式 */
+.ad-card img {
+  width: 100%; /* 图片宽度 */
+  height: auto; /* 图片高度自适应 */
+  display: block; /* 去除图片下方间隙 */
+}
+
+/* 卡片广告标题样式 */
+.ad-card h3 {
+  font-size: 18px; /* 标题字体大小 */
+  color: #333333; /* 标题颜色 */
+  padding: 10px 15px; /* 内边距 */
+  margin: 0; /* 外边距 */
+}
+
+/* 卡片广告描述样式 */
+.ad-card p {
+  font-size: 14px; /* 描述字体大小 */
+  color: #666666; /* 描述颜色 */
+  padding: 0 15px 15px; /* 内边距 */
+  margin: 0; /* 外边距 */
+}
+
+/* 卡片广告按钮样式 */
+.ad-card .btn {
+  display: inline-block; /* 行内块元素 */
+  padding: 8px 15px; /* 内边距 */
+  background-color: #007bff; /* 按钮背景颜色 */
+  color: #ffffff; /* 按钮文字颜色 */
+  border: none; /* 去除边框 */
+  border-radius: 4px; /* 圆角边框 */
+  text-decoration: none; /* 去除下划线 */
+  font-size: 14px; /* 按钮字体大小 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: background-color 0.3s ease; /* 鼠标悬停时的动画效果 */
+}
+
+/* 鼠标悬停时的按钮样式 */
+.ad-card .btn:hover {
+  background-color: #0056b3; /* 鼠标悬停时按钮背景颜色 */
+}
+
+</style>
+<div class="horizontal-cards">
+    <div class="ad-card">
+        <img src="604.webp" alt="广告图片">
+        <h3>604官网~</h3>
+        <p>开源工具箱官网，604开发者官网</p>
+        <a href="https://redstonea.github.io" class="btn">点我，喵~</a>
+      </div>
+      <div class="ad-card">
+        <img src="gg1.PNG" alt="广告图片">
+        <h3>广告位招租~</h3>
+        <p>这里是广告描述，可以简短介绍广告内容。</p>
+        <a href="#" class="btn">广告位招租~</a>
+      </div>
+</div>
+    </body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>m1596g367udnhcuusl4bl0nl2ej</title>
+  <link rel="icon" href="../biaoqing.png" type="image/png"> 
+  <style>
+    body {
+      font-family: "华文行楷";
+      background-color: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 300px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h2 {
+      text-align: center;
+    }
+
+    .container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+
+    .container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+    <h2>先过我这关再说</h2>
+  <div class="container">
+    <h2>请在下方输入密钥</h2>
+    <input autocomplete="off" type="password" id="password" placeholder="Enter password">
+    <button onclick="login()">验证</button>
+  </div>
+
+  <script>
+    function login() {
+      var passwordInput = document.getElementById("password").value;
+      var correctPassword = "t44z9l4ck93vubcd3eeq9q6vlh"; // 将"your-password"替换为你设置的固定密码
+
+      if (passwordInput === correctPassword) {
+        // 密码正确，跳转到指定页面
+        window.location.href = "../server/index.html"
+      } else {
+        // 密码不正确，弹出提示
+        alert("密码不正确，请重新输入。");
+      }
+    }
+  </script>
+</body>
+</html>

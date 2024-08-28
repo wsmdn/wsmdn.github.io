@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>获取QQ头像昵称工具</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引入Font Awesome的CSS文件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* 添加一些自定义样式 */
+        body {
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+        .form-control {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .btn {
+            flex-shrink: 0;
+        }
+        .result {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .result img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .result p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <i class="fab fa-qq"></i> 获取QQ头像昵称工具
+            </div>
+            <div class="card-body">
+                <form id="qqForm">
+                    <div class="form-group">
+                        <label for="qqInput">请输入QQ号：</label>
+                        <input type="text" id="qqInput" name="qq" class="form-control" placeholder="例如：2283828039">
+                        <button type="submit" class="btn btn-primary">获取</button>
+                    </div>
+                </form>
+                <div id="resultContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("qqForm");
+            var resultContainer = document.getElementById("resultContainer");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // 阻止表单提交的默认行为
+
+                var qqInput = document.getElementById("qqInput");
+                var qq = qqInput.value.trim();
+
+                // 如果输入框为空，则清空结果容器并返回
+                if (qq === "") {
+                    resultContainer.innerHTML = "";
+                    return;
+                }
+
+                // 创建请求URL
+                var apiUrl = "https://api.vvhan.com/api/qq?qq=" + qq;
+
+                // 发送GET请求
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", apiUrl);
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        var nickname = response.name;
+                        var avatarUrl = response.imgurl;
+
+                        // 清空结果容器
+                        resultContainer.innerHTML = "";
+
+                        // 创建一个结果元素
+                        var result = document.createElement("div");
+                        result.className = "result";
+
+                        // 创建图片元素
+                        var image = document.createElement("img");
+                        image.src = avatarUrl;
+                        image.alt = "QQ头像";
+
+                        // 创建昵称元素
+                        var nicknameElement = document.createElement("p");
+                        nicknameElement.textContent = "昵称：" + nickname;
+
+                        // 将图片和昵称添加到结果元素中
+                        result.appendChild(image);
+                        result.appendChild(nicknameElement);
+
+                        // 将结果元素添加到结果容器中
+                        resultContainer.appendChild(result);
+                    } else {
+                        console.log("获取信息失败，请稍后重试。");
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
+    <!-- 引入Bootstrap的JS文件 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

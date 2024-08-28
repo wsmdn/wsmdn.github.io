@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../biaoqing.png" type="image/png"> 
+    <title>mdn小小资源站</title>
+</head>
+<head>
+<body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <div id="gitalk-container"></div>
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'd5ae294c53f96b54a8fa',
+        clientSecret: '064ee7812e0fb3253d1f6c55b3da025220f80655',
+        repo: 'wsmdn.github.io',
+        owner: 'wsmdn',
+        admin: ['wsmdn'],
+        proxy:"https://strong-caramel-969805.netlify.app/github_access_token",
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      
+      gitalk.render('gitalk-container')
+    </script>
+	<div class="game-container">
+	    <h1 class="game-title">前往回声洞备用方案</h1>  
+	    <div class="game-icon"></div>  
+	    <p class="game-info">若白屏可使用这个</p>   
+	    <p>点击<a href="https://wsmdn.github.io/more/hsd.html" class="game-link">这里跳转</a> 
+	        </div> 
+    <div class="game-container">
+        <h1 class="game-title">回到主站</h1>  
+        <div class="game-icon"></div>  
+        <p class="game-info">我要回主页！！！</p>   
+        <p>点击<a href="../index.html" class="game-link">这里跳转</a> 
+            </div> 
+      
+</body>
+</head>
